@@ -1,28 +1,5 @@
 #include "project_config.h"
-
-class B
-{};
-
-class A : B
-{
-public:
-    A()
-    {
-        RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
-        GPIOC->CRH = 1;
-        GPIOC->ODR |= 1<<8;
-    }
-
-    virtual void foo()
-    {}
-
-    virtual ~A()
-    {}
-};
-
-A a;
-
-
+#include "uart_handle.h" 
 
 int main(void)
 {
