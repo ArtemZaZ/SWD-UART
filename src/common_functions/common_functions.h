@@ -246,5 +246,17 @@ namespace common_functions
     **************************************************************************************************/
     inline void doNothing(void)
     {}
+    
+    /*
+        подсчитывает количество равных единице бит в двоичном представлении 32хбитного числа
+    */
+    inline uint8_t countSetBits(uint32_t arg)     			
+    {
+      arg = (arg & 0x55555555L) + ((arg >> 1) & 0x55555555L);        
+      arg = (arg & 0x33333333L) + ((arg >> 2) & 0x33333333L);
+      arg = (arg + (arg >> 4)) & 0x0F0F0F0FL;
+      arg += arg >> 8;  
+      return (uint8_t)(arg + (arg >> 16)) & 0x3F;
+    }
 
 }

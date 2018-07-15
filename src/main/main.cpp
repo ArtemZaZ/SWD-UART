@@ -1,13 +1,18 @@
 #include "project_config.h"
 #include "uart_handle.h" 
+#include "DAP_config.h"
+#include "swd_handle.h"
 
 int main(void)
 {
-    // демонстрация остановки отладчика по эксепшону
-//    int * p = (int *)3;    
-//    volatile double d = *(double *)(p);
-
+  //uart::Handle uart1;
+  swd::SwdHandle swdHandle;
+  swd::SwdPackage package;
+  
+  package = swdHandle.pack(1,1,2,1,1,100);
+  
+  uart::uart1.init(uart::Pins::UART1_PA9_PA10, 9600);
+  uart::uart1.sendStaticArray("assassaassdax", 13);
 	while(1);
-
-	return 0;
+  
 }
