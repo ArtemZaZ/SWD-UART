@@ -163,6 +163,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>\\dummy\src/Main/main.cpp\main\package</ItemText>
         </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>GPIOA</ItemText>
+        </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>

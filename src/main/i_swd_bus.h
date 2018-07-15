@@ -1,6 +1,7 @@
 #ifndef SWD_H_
 #define SWD_H_
 #include "stdint.h"
+#include "stm32f10x.h"
 // Исследование протокола SWD в рамках практики
 /* 
 1) От хоста(в данном случае программатора) поступает 8ми битный packet request, состоящий из:
@@ -49,10 +50,10 @@ namespace swd
     unsigned Stop   : 1;
     unsigned Park   : 1;    
     unsigned ACK    : 3;    
-    uint32_t data;      
+    uint32_t data   : 32;      
     unsigned dataParity : 1;
   };
-}
+};
 
 namespace swd
 {
@@ -61,7 +62,14 @@ namespace swd
   {
     public:
       virtual ~ISwdBus() {};   // деструктор
-      virtual uint32_t transferPackege(SwdPackage package) = 0;   // пересылает пакет туда или обратно)     
+      virtual void init(GPIO_TypeDef * swdioPort, uint8_t swdioPinNumber,     // SWDIO
+                            GPIO_TypeDef * swclkPort, uint8_t swclkPinNumber,    // SWCLK
+                            GPIO_TypeDef * nResetPort, uint8_t nResetPinNumber) = 0;  // nRESET
+      virtual void transferPackage(SwdPackage package) = 0;   // пересылает пакет туда или обратно) 
+    
+      virtual inline void writeBit(uint8_t bit) = 0;  // отправка бита по swd
+      virtual inline uint8_t readBit(void) = 0;   // чтение бита с swd      
   };
-}
+};
+
 #endif /* SWD_H_ */
