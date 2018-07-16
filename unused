@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060528: Last Updated: Sun Jul 15 22:39:15 2018
+;#<FEEDBACK># ARM Linker, 5060528: Last Updated: Mon Jul 16 23:20:30 2018
 ;VERSION 0.2
 ;FILE common_functions.o
 _ZN16common_functions13linearRescaleEiiiii <= USED 0
@@ -103,8 +103,6 @@ __asm___17_stm32f10x_usart_c_9565154b____RRX <= USED 0
 ;FILE swd_handle.o
 _ZN3swd7ISwdBusD0Ev <= USED 0
 _ZN3swd7ISwdBusD2Ev <= USED 0
-_ZN3swd9SwdHandle7readBitEv <= USED 0
-_ZN3swd9SwdHandle8writeBitEh <= USED 0
 _ZN3swd9SwdHandleD0Ev <= USED 0
 _ZN3swd9SwdHandleD1Ev <= USED 0
 __asm___14_swd_handle_cpp_66acc63d___Z5__RRXj <= USED 0

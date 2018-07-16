@@ -2,6 +2,11 @@
 #define SWD_H_
 #include "stdint.h"
 #include "stm32f10x.h"
+
+#define SWD_TRANSFER_OK     (1<<0)    // дефайны для прием ack по swd
+#define SWD_TRANSFER_WAIT   (1<<1)
+#define SWD_TRANSFER_FAULT  (1<<2)
+
 // Исследование протокола SWD в рамках практики
 /* 
 1) От хоста(в данном случае программатора) поступает 8ми битный packet request, состоящий из:
@@ -55,6 +60,8 @@ namespace swd
   };
 };
 
+
+
 namespace swd
 {
   // Интерфейс шины SWD
@@ -65,7 +72,7 @@ namespace swd
       virtual void init(GPIO_TypeDef * swdioPort, uint8_t swdioPinNumber,     // SWDIO
                             GPIO_TypeDef * swclkPort, uint8_t swclkPinNumber,    // SWCLK
                             GPIO_TypeDef * nResetPort, uint8_t nResetPinNumber) = 0;  // nRESET
-      virtual void transferPackage(SwdPackage package) = 0;   // пересылает пакет туда или обратно) 
+      virtual void transferPackage(SwdPackage * package) = 0;   // пересылает пакет туда или обратно) 
     
       virtual inline void writeBit(uint8_t bit) = 0;  // отправка бита по swd
       virtual inline uint8_t readBit(void) = 0;   // чтение бита с swd      
