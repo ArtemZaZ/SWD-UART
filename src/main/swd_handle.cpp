@@ -1,5 +1,6 @@
 #include "swd_handle.h"
 #include "common_functions.h"
+#include "stm32f10x_gpio.h"
 
 namespace swd
 {
@@ -23,6 +24,24 @@ namespace swd
     this->swclkPinNumber = swclkPinNumber;
     this->nResetPinNumber = nResetPinNumber;
     
+    this->swdioPort->BSRR = swdioPin;
+    this->swclkPort->BSRR = swclkPin;
+    this->nResetPort->BRR = nResetPin;
+    
+    /* инициализация переферии, мб придется делать на HAL */
+    GPIO_InitTypeDef swdioInit;
+    swdioInit.GPIO_Pin = swdioPin;
+    swdioInit.GPIO_Mode = GPIO_Mode_Out_PP;
+    swdioInit.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(this->swdioPort, &swdioInit);
+    
+    GPIO_InitTypeDef swclkInit;
+    swclkInit.GPIO_Pin = swclkPin;
+    swclkInit.GPIO_Mode = GPIO_Mode_Out_PP;
+    swclkInit.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(this->swclkPort, &swclkInit);    
+    
+    /* nReset пока не трогаю */
   }
   
   SwdPackage SwdHandle::pack(uint8_t APnDP, uint8_t RnW,
@@ -112,6 +131,7 @@ namespace swd
   void SwdHandle::transferPackage(SwdPackage * package)
   {
     // отправка request
+    swdioOutEnable();   // будем писать
     writeBit(package->Start);
     writeBit(package->APnDP);
     writeBit(package->RnW);
@@ -120,23 +140,71 @@ namespace swd
     writeBit(package->Parity);
     writeBit(package->Stop);
     writeBit(package->Park);
-    
+    swdioOutDisable();  // будем читать
     /*
-    тут должно быть что-то типо задержки для того, чтобы дать время на обработку
+      TODO: тут должно быть что-то типо задержки для того, чтобы дать время на обработку
     */
     
     package->ACK =  readBit();    // читаем ack побитово
     package->ACK |= readBit() << 1;
     package->ACK |= readBit() << 2;
     
-    if(package->ACK == SWD_TRANSFER_OK)
+    if(package->ACK == SWD_TRANSFER_OK)   // можно общаться
     {
+      if(package->RnW)  // если взапросе чтение данных
+      {
+        uint32_t data = 0;  // сюда запсываются прочитанные данные
+        uint8_t parity = 0; // а тут считаем четность
+        uint8_t bit = 0;    // временная переменная для храненияя значения бита
+        for(uint8_t n = 31; n + 1; n--)   // 32 прохода
+        {
+          bit = readBit();
+          data |= (bit << n);
+          parity += bit;          
+        }
+        bit = readBit(); // читаем четность
+        if((parity ^ bit) & 1)
+        {
+          /*
+            TODO: ошибка чтения тут
+          */
+        }
+        package->data = data;
+        
+        /*
+          TODO: тут опять задержка на обработку
+        */
+        swdioOutEnable(); // будем писать        
+      }
+      else  // отправка данных
+      {
+        /*
+          TODO: задержка на обработку
+        */
+        swdioOutEnable(); // будем писать
+        uint32_t data = package->data;
+        for(uint8_t n = 31; n + 1; n--) // 32 прохода
+        {
+          writeBit((data >> n) & 1);  // записываем по 1 биту, начиная со старшего
+        }
+        writeBit(package->dataParity); // записываем четность
+      }
+      /*
+        TODO: тут должен быть пустой цикл swclk и еще какая-то лабуда
+      */
       
+      return;
     }
     if((package->ACK == SWD_TRANSFER_WAIT) || (package->ACK == SWD_TRANSFER_FAULT))
     {
-      
+      /*
+        TODO: и тут тоже какая-то лабуда
+      */
     }
+    
+    /*
+      TODO: тут словить ошибку в протоколе, тип не поймал ни одного нормального ack
+    */ 
     
   }
   
