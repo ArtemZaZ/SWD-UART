@@ -7,8 +7,12 @@ int main(void)
   //uart::Handle uart1;
   swd::SwdHandle swdHandle;
   swd::SwdPackage package;
-  swdHandle.init(GPIOA, 3, GPIOA, 4, GPIOB, 5);
-  package = swdHandle.pack(1,1,2,1,1,100);
+  swdHandle.init(GPIOA, 3, GPIOA, 4, GPIOA, 5);
+  package = swdHandle.pack(0,1,0);
+  swdHandle.transferPackage(&package);
+  
+  package = swdHandle.pack(0,1,0);
+  swdHandle.transferPackage(&package);
   
   uart::uart1.init(uart::Pins::UART1_PA9_PA10, 9600);
   uart::uart1.sendStaticArray("assassaassdax", 13);

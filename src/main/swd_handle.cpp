@@ -37,11 +37,15 @@ namespace swd
     this->swclkPinNumber = swclkPinNumber;
     this->nResetPinNumber = nResetPinNumber;
     
+    /* инициализация переферии, мб придется делать на HAL */
+    RCC->APB2ENR |= gpioToRcc(swdioPort);
+    RCC->APB2ENR |= gpioToRcc(swclkPort);
+    RCC->APB2ENR |= gpioToRcc(nResetPort);
+    
     this->swdioPort->BSRR = swdioPin;
     this->swclkPort->BSRR = swclkPin;
     this->nResetPort->BRR = nResetPin;
     
-    /* инициализация переферии, мб придется делать на HAL */
     GPIO_InitTypeDef swdioInit;
     swdioInit.GPIO_Pin = swdioPin;
     swdioInit.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -58,17 +62,16 @@ namespace swd
   }
   
   SwdPackage SwdHandle::pack(uint8_t APnDP, uint8_t RnW,
-                  uint8_t A, uint8_t Park, uint8_t ACK,
-                  uint32_t data)
+                  uint8_t A, uint32_t data)
   {
     SwdPackage package;
     package.Start = 1;
     package.APnDP = APnDP & 1;
     package.RnW = RnW & 1;
     package.A = A & 0x3;
-    package.Park = Park & 1;
+    package.Park = 1;
     package.Stop = 0;
-    package.ACK = ACK & 0x7;
+    package.ACK = 0;
     package.Parity = (package.Start + (package.APnDP & 0x2) + (package.APnDP & 1) + package.RnW + package.A) & 1;
     package.data = data;
     package.dataParity = common_functions::countSetBits(data);
@@ -96,7 +99,7 @@ namespace swd
   
   inline void SwdHandle::swdioOutEnable(void)  
   {
-    if(swdioPin < 8)
+    if(swdioPinNumber < 8)
       swdioPort->CRL = (swdioPort->CRL & ~(0xF << (4*swdioPinNumber))) | (0x03 << (4*swdioPinNumber)); 
     else
       swdioPort->CRH = (swdioPort->CRH & ~(0xF << (4*(swdioPinNumber - 8)))) | (0x03 << (4*(swdioPinNumber - 8))); 
@@ -104,7 +107,7 @@ namespace swd
 
   inline void SwdHandle::swdioOutDisable(void)
   {
-    if(swdioPin < 8)
+    if(swdioPinNumber < 8)
       swdioPort->CRL = (swdioPort->CRL & ~(0xF << (4*swdioPinNumber))) | (0x08 << (4*swdioPinNumber));
     else
       swdioPort->CRH = (swdioPort->CRH & ~(0xF << (4*(swdioPinNumber - 8)))) | (0x08 << (4*(swdioPinNumber - 8)));
@@ -143,6 +146,7 @@ namespace swd
   
   void SwdHandle::transferPackage(SwdPackage * package)
   {
+    __disable_irq();
     // отправка request
     swdioOutEnable();   // будем писать
     writeBit(package->Start);
@@ -202,6 +206,7 @@ namespace swd
       // тут должен быть пустой цикл swclk и еще какая-то лабуда
       idleCycles(settings.idleCycles);
       swdioOut(1);      
+      __enable_irq();
       return;
     }
     
@@ -220,6 +225,7 @@ namespace swd
         turnaroid(32+1);  // 32(data) + 1(parity)
       }
       swdioOut(1);
+      __enable_irq();
       return;
     }    
     // тут ловится ошибка в протоколе, тип не поймал ни одного нормального ack
@@ -227,6 +233,7 @@ namespace swd
     turnaroid(settings.turnaroid + 32 + 1);
     swdioOutEnable();
     swdioOut(1);
+    __enable_irq();
     return;    
   }
   
