@@ -1,5 +1,5 @@
-#ifndef SWD_H_
-#define SWD_H_
+#pragma once
+
 #include "stdint.h"
 #include "stm32f10x.h"
 
@@ -60,7 +60,23 @@ namespace swd
   };
 };
 
-
+/* структура настройки swd устройства */
+namespace swd
+{
+  // некоторое из этого пока хз что значит, но оно иногда юзается, или нет) 
+  // как я понял какая-то часть из этого прилетает от драйвера Keil'a
+  struct SwdDevSettings
+  {
+    uint8_t   debagPort;  
+    uint32_t  clockDelay;   // задержка между высоки и низким уровнем тактирования
+    uint8_t   idleCycles;   // количество пустых циклов после передачи
+    uint16_t  retryCount;
+    uint16_t  matchRetry;
+    uint32_t  matchMask;
+    uint8_t   turnaroid;    // задержка для обработки данных
+    uint8_t   dataPhase;
+  };
+};
 
 namespace swd
 {
@@ -79,4 +95,4 @@ namespace swd
   };
 };
 
-#endif /* SWD_H_ */
+

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "i_swd_bus.h"
 
 namespace swd
@@ -6,17 +8,20 @@ namespace swd
   {
     public:
       SwdHandle();  // конструктор
+      SwdHandle(SwdDevSettings settings);
       virtual void init(GPIO_TypeDef * swdioPort, uint8_t swdioPinNumber,     // SWDIO
                             GPIO_TypeDef * swclkPort, uint8_t swclkPinNumber,    // SWCLK
                             GPIO_TypeDef * nResetPort, uint8_t nResetPinNumber);  // nRESET
       
       virtual SwdPackage pack(uint8_t APnDP, uint8_t RnW,
                               uint8_t A, uint8_t Park,
-                              uint8_t ACK=0, uint32_t data=0);  // упаковщик
+                              uint8_t ACK=0, uint32_t data=0);  // упаковщик, про параметры подробнее в i_swd_bus.h и reference manual->SW debug port(стр. 1089)
       
       virtual void transferPackage(SwdPackage * package);       
     
     protected:
+      // настройка swd и т.д.
+      SwdDevSettings settings;
       // порты
       GPIO_TypeDef * swdioPort;
       GPIO_TypeDef * swclkPort;
@@ -29,9 +34,7 @@ namespace swd
       uint16_t swdioPin;
       uint16_t swclkPin;
       uint16_t nResetPin;
-    
-      int32_t clockDelay;
-      
+        
       virtual inline void writeBit(uint8_t bit);
       virtual inline uint8_t readBit(void);
 
@@ -43,6 +46,8 @@ namespace swd
       inline void swclkToLow(void);       // прижимаем swclk в ноль
       inline void swclkToHigh(void);      // swclk на высокий уровень
       inline void swclkCycle(void);       // цикл тактирования
-      inline void pinDelay(int32_t delay);
+      inline void pinDelay(uint32_t delay);
+      inline void turnaroid(uint8_t turnaroid); // задержка после отправки
+      inline void idleCycles(uint8_t idleCycles);   // пусые циклы swclk
   };  
 }

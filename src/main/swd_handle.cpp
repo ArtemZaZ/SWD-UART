@@ -7,8 +7,21 @@ namespace swd
   // определение всего, что входит в класс SwdHandle
   SwdHandle::SwdHandle()
   {
-    
-  }  
+    // default settings
+    settings.debagPort = 0;
+    settings.clockDelay = 2;
+    settings.retryCount = 100;
+    settings.idleCycles = 0;
+    settings.matchRetry = 0;
+    settings.matchMask = 0x00;
+    settings.dataPhase = 0;
+    settings.turnaroid = 1;
+  }
+
+  SwdHandle::SwdHandle(SwdDevSettings settings)
+  {
+    this->settings = settings;
+  }
   
   void SwdHandle::init(GPIO_TypeDef * swdioPort, uint8_t swdioPinNumber,     // SWDIO
                             GPIO_TypeDef * swclkPort, uint8_t swclkPinNumber,    // SWCLK
@@ -66,18 +79,18 @@ namespace swd
   {
     swdioOut(bit);
     swclkToLow();
-    pinDelay(clockDelay);
+    pinDelay(settings.clockDelay);
     swclkToHigh();
-    pinDelay(clockDelay);
+    pinDelay(settings.clockDelay);
   }
   
   inline uint8_t SwdHandle::readBit(void)
   {
     swclkToLow();
-    pinDelay(clockDelay);
+    pinDelay(settings.clockDelay);
     uint8_t bit = swdioIn();
     swclkToHigh();
-    pinDelay(clockDelay);
+    pinDelay(settings.clockDelay);
     return bit;
   }
   
@@ -123,9 +136,9 @@ namespace swd
   inline void SwdHandle::swclkCycle(void)
   {
     swclkToLow();
-    pinDelay(clockDelay);
+    pinDelay(settings.clockDelay);
     swclkToHigh();
-    pinDelay(clockDelay);
+    pinDelay(settings.clockDelay);
   }
   
   void SwdHandle::transferPackage(SwdPackage * package)
@@ -141,9 +154,9 @@ namespace swd
     writeBit(package->Stop);
     writeBit(package->Park);
     swdioOutDisable();  // будем читать
-    /*
-      TODO: тут должно быть что-то типо задержки для того, чтобы дать время на обработку
-    */
+    
+    // тут должно быть что-то типо задержки для того, чтобы дать время на обработку
+    turnaroid(settings.turnaroid);
     
     package->ACK =  readBit();    // читаем ack побитово
     package->ACK |= readBit() << 1;
@@ -169,18 +182,15 @@ namespace swd
             TODO: ошибка чтения тут
           */
         }
-        package->data = data;
-        
-        /*
-          TODO: тут опять задержка на обработку
-        */
+        package->data = data;                
+        // тут опять задержка на обработку
+        turnaroid(settings.turnaroid);        
         swdioOutEnable(); // будем писать        
       }
       else  // отправка данных
-      {
-        /*
-          TODO: задержка на обработку
-        */
+      {       
+        // задержка на обработку
+        turnaroid(settings.turnaroid);        
         swdioOutEnable(); // будем писать
         uint32_t data = package->data;
         for(uint8_t n = 31; n + 1; n--) // 32 прохода
@@ -188,29 +198,55 @@ namespace swd
           writeBit((data >> n) & 1);  // записываем по 1 биту, начиная со старшего
         }
         writeBit(package->dataParity); // записываем четность
-      }
-      /*
-        TODO: тут должен быть пустой цикл swclk и еще какая-то лабуда
-      */
-      
+      }      
+      // тут должен быть пустой цикл swclk и еще какая-то лабуда
+      idleCycles(settings.idleCycles);
+      swdioOut(1);      
       return;
     }
+    
     if((package->ACK == SWD_TRANSFER_WAIT) || (package->ACK == SWD_TRANSFER_FAULT))
     {
-      /*
-        TODO: и тут тоже какая-то лабуда
-      */
-    }
+      if(settings.dataPhase && (package->RnW))  // если режим чтения и видимо dataPhase значит, что все таки данные шлются и их надо пропустить
+      {
+        turnaroid(32+1);  // 32(data) + 1(parity)
+      }
+      turnaroid(settings.turnaroid);
+      
+      swdioOutEnable();
+      if(settings.dataPhase && !(package->RnW))  // если режим записи
+      {
+        swdioOut(0);
+        turnaroid(32+1);  // 32(data) + 1(parity)
+      }
+      swdioOut(1);
+      return;
+    }    
+    // тут ловится ошибка в протоколе, тип не поймал ни одного нормального ack
     
-    /*
-      TODO: тут словить ошибку в протоколе, тип не поймал ни одного нормального ack
-    */ 
-    
+    turnaroid(settings.turnaroid + 32 + 1);
+    swdioOutEnable();
+    swdioOut(1);
+    return;    
   }
   
-  inline void SwdHandle::pinDelay(int32_t delay)
+  inline void SwdHandle::turnaroid(uint8_t turnaroid)
   {
-    volatile int32_t count;
+    for(;turnaroid; turnaroid--)  swclkCycle();     
+  }
+  
+  inline void SwdHandle::idleCycles(uint8_t idleCycles)
+  {
+    if(idleCycles)
+    {
+      swdioOut(0);
+      for(;idleCycles; idleCycles--)  swclkCycle();
+    }
+  }    
+  
+  inline void SwdHandle::pinDelay(uint32_t delay)
+  {
+    volatile uint32_t count;
     count = delay;
     while(--count);
   }    
