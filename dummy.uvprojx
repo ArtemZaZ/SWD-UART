@@ -336,7 +336,7 @@
               <MiscControls>--feedback=unused</MiscControls>
               <Define>STM32F103xB, USE_FULL_ASSERT, STM32F10X_MD, USE_STDPERIPH_DRIVER, HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\uart;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver\inc;.\src\common_functions</IncludePath>
+              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\uart;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver\inc;.\src\common_functions;.\src\circular_buffer</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -404,6 +404,21 @@
               <FileName>swd_handle.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\src\main\swd_handle.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>uart_swd_adapter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\src\main\uart_swd_adapter.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>base_swd_adapter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\src\main\base_swd_adapter.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>repeater.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\src\main\repeater.cpp</FilePath>
             </File>
           </Files>
         </Group>

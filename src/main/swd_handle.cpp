@@ -57,7 +57,6 @@ namespace swd
     swclkInit.GPIO_Mode = GPIO_Mode_Out_PP;
     swclkInit.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(this->swclkPort, &swclkInit);    
-    
     /* nReset пока не трогаю */
   }
   
