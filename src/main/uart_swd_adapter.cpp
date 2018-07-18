@@ -9,6 +9,10 @@ namespace adapter
   
   UartSwdAdapter::UartSwdAdapter(swd::ISwdBus * swdBus, uart::Handle * uart) : BaseSwdAdapter(swdBus)
   {    
-    this->uart = uart;
+    m_uart = uart;
+  }
+  
+  void UartSwdAdapter::parseUartBuffer(void)
+  {
   }
 };

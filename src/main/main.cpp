@@ -10,7 +10,7 @@ int main(void)
   //swd::SwdPackage package;
   swdHandle.init(GPIOA, 3, GPIOA, 4, GPIOA, 5);
   
-  adapter::UartSwdAdapter uartAdapter(&swdHandle, &(uart::uart1));
+  adapter::UartSwdAdapter uartSwdAdapter(&swdHandle, &(uart::uart1));
   
   uart::uart1.init(uart::Pins::UART1_PA9_PA10, 9600);
   uart::uart1.sendStaticArray("assassaassdax", 13);

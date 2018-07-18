@@ -89,7 +89,8 @@ namespace swd
                             GPIO_TypeDef * swclkPort, uint8_t swclkPinNumber,    // SWCLK
                             GPIO_TypeDef * nResetPort, uint8_t nResetPinNumber) = 0;  // nRESET
       virtual void transferPackage(SwdPackage * package) = 0;   // пересылает пакет туда или обратно) 
-    
+      virtual SwdPackage pack(uint8_t APnDP, uint8_t RnW,
+                              uint8_t A, uint32_t data=0) = 0;
       virtual inline void writeBit(uint8_t bit) = 0;  // отправка бита по swd
       virtual inline uint8_t readBit(void) = 0;   // чтение бита с swd      
   };

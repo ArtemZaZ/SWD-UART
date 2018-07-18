@@ -8,11 +8,14 @@ namespace adapter
   // класс-адаптер между uart и swd
   class UartSwdAdapter : public BaseSwdAdapter
   {     
-    public:
-      UartSwdAdapter();
-      UartSwdAdapter(swd::ISwdBus * swdBus, uart::Handle * uart);
-    protected:
-      uart::Handle * uart;
+  public:
+    UartSwdAdapter();
+    UartSwdAdapter(swd::ISwdBus * swdBus, uart::Handle * uart);
+  protected:
+    uart::Handle * m_uart;
+  
+  private:
+    void parseUartBuffer(void); // читаем буффер и вытаскиваем оттуда сообщения    
   };
   
 };

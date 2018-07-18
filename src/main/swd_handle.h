@@ -20,19 +20,19 @@ namespace swd
     
     protected:
       // настройка swd и т.д.
-      SwdDevSettings settings;
+      SwdDevSettings m_settings;
       // порты
-      GPIO_TypeDef * swdioPort;
-      GPIO_TypeDef * swclkPort;
-      GPIO_TypeDef * nResetPort;
+      GPIO_TypeDef * m_swdioPort;
+      GPIO_TypeDef * m_swclkPort;
+      GPIO_TypeDef * m_nResetPort;
       // номера пинов
-      uint8_t swdioPinNumber;
-      uint8_t swclkPinNumber;
-      uint8_t nResetPinNumber;
+      uint8_t m_swdioPinNumber;
+      uint8_t m_swclkPinNumber;
+      uint8_t m_nResetPinNumber;
       // пины
-      uint16_t swdioPin;
-      uint16_t swclkPin;
-      uint16_t nResetPin;
+      uint16_t m_swdioPin;
+      uint16_t m_swclkPin;
+      uint16_t m_nResetPin;
         
       virtual inline void writeBit(uint8_t bit);
       virtual inline uint8_t readBit(void);

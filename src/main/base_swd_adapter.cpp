@@ -2,14 +2,14 @@
 
 namespace adapter
 {
-  BaseSwdAdapter::BaseSwdAdapter()
+  BaseSwdAdapter::BaseSwdAdapter() : m_swdBus(0)
   {
     
   }
   
-  BaseSwdAdapter::BaseSwdAdapter(swd::ISwdBus * swdBus)
+  BaseSwdAdapter::BaseSwdAdapter(swd::ISwdBus * swdBus) : m_swdBus(swdBus)
   {
-    this->swdBus = swdBus;  // ссылка, не новый экземпляр
+    
   }
   
 };
