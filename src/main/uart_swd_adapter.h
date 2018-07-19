@@ -15,7 +15,7 @@ namespace adapter
     uart::Handle * m_uart;
   
   private:
-    void parseUartBuffer(void); // читаем буффер и вытаскиваем оттуда сообщения    
+    uint8_t getPackage(swd::SwdPackage * package); // читаем входной буффер и вытаскиваем оттуда сообщение, возвращает кол-во прочитанных пакетов 
   };
   
 };

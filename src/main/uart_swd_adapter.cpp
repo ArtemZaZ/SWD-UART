@@ -12,7 +12,8 @@ namespace adapter
     m_uart = uart;
   }
   
-  void UartSwdAdapter::parseUartBuffer(void)
+  uint8_t UartSwdAdapter::readPackage(swd::SwdPackage * package)
   {
+    
   }
 };
