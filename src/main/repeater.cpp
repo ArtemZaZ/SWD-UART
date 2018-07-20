@@ -2,6 +2,29 @@
 
 namespace repeater
 {
+  Repeater::Repeater() 
+  {
+    
+  }
+  
+  void Repeater::appendAdapter(adapter::BaseSwdAdapter* adapter)
+  {
+    m_adapters[m_adapterNum] = adapter;
+    m_adapterNum++;
+  }
+  
+  adapter::BaseSwdAdapter* Repeater::getNextPackageAdapter(void)
+  {
+    if(m_packageAdapterCounter > m_adapterNum)  m_packageAdapterCounter = 0;
+    return m_adapters[m_packageAdapterCounter++];
+  }
+  
+  adapter::BaseSwdAdapter* Repeater::getNextDataAdapter(void)
+  {
+    if(m_dataAdapterCounter > m_adapterNum)  m_dataAdapterCounter = 0;
+    return m_adapters[m_dataAdapterCounter++];
+  }
+  
   void Repeater::fsm(void)
   {
     switch(m_state)

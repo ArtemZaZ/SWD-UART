@@ -9,12 +9,23 @@ namespace repeater
   {
   public:
     Repeater();
+    void appendAdapter(adapter::BaseSwdAdapter* adapter);   // добавляет адаптер в список адаптеров
+    // конечный автомат ретранслятора
+    void fsm(void);
   
   protected:
     // все адаптеры интерфейса SWD
-    adapter::BaseSwdAdapter m_adapters[10];
-    // конечный автомат ретранслятора
-    void fsm(void);
+    adapter::BaseSwdAdapter* m_adapters[10] = {0,};
+    // количество прицепленных адаптеров
+    uint8_t m_adapterNum = 0;    
+    // ф-ия, которая возвращает следующий указатль на адаптер, из которого цепляется пакет
+    adapter::BaseSwdAdapter* getNextPackageAdapter(void);
+    // ф-ия, которая возвращает следующий указатль на адаптер, из которого цепляются данные
+    adapter::BaseSwdAdapter* getNextDataAdapter(void);
+  
+  private:
+    uint8_t m_packageAdapterCounter = 0;    // индекс текущего адаптера, с которого цепляются пакеты
+    uint8_t m_dataAdapterCounter = 0;   // индекс текущего адаптера, с которого цепляются данные
     // состояния конечного автомата
     enum 
     {
@@ -26,7 +37,7 @@ namespace repeater
       // ставим каретку на следующий адаптер, запихиваем прочитанные данные в пакет
       READ_DATA,      
       SEND_TO_SWD   // отправляем пакет по SWD
-    } m_state;
+    } m_state = READ_PACKAGE;
     
   };
 };

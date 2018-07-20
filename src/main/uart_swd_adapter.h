@@ -12,7 +12,7 @@ namespace adapter
     UartSwdAdapter();
     UartSwdAdapter(swd::ISwdBus * swdBus, uart::Handle * uart);
   protected:
-    uart::Handle * m_uart;
+    uart::Handle * m_uart = 0;
   
   private:
     uint8_t getPackage(swd::SwdPackage * package); // читаем входной буффер и вытаскиваем оттуда сообщение, возвращает кол-во прочитанных пакетов 

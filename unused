@@ -1,28 +1,30 @@
-;#<FEEDBACK># ARM Linker, 5060528: Last Updated: Thu Jul 19 12:10:51 2018
+;#<FEEDBACK># ARM Linker, 5060528: Last Updated: Fri Jul 20 12:09:52 2018
 ;VERSION 0.2
 ;FILE base_swd_adapter.o
 _ZN7adapter14BaseSwdAdapterC1Ev <= USED 0
-__asm___20_base_swd_adapter_cpp_0fd57b6d___Z5__RRXj <= USED 0
-__asm___20_base_swd_adapter_cpp_0fd57b6d___Z7__REV16j <= USED 0
-__asm___20_base_swd_adapter_cpp_0fd57b6d___Z7__REVSHi <= USED 0
+__asm___20_base_swd_adapter_cpp_0fd57b6d___ZN42_INTERNAL_20_base_swd_adapter_cpp_0fd57b6d5__RRXEj <= USED 0
+__asm___20_base_swd_adapter_cpp_0fd57b6d___ZN42_INTERNAL_20_base_swd_adapter_cpp_0fd57b6d7__REV16Ej <= USED 0
+__asm___20_base_swd_adapter_cpp_0fd57b6d___ZN42_INTERNAL_20_base_swd_adapter_cpp_0fd57b6d7__REVSHEi <= USED 0
 ;FILE common_functions.o
 _ZN16common_functions13linearRescaleEiiiii <= USED 0
 _ZN16common_functions18xorshiftRandomByteEv <= USED 0
-__asm___20_common_functions_cpp_5a5093bc___Z5__RRXj <= USED 0
-__asm___20_common_functions_cpp_5a5093bc___Z7__REV16j <= USED 0
-__asm___20_common_functions_cpp_5a5093bc___Z7__REVSHi <= USED 0
+__asm___20_common_functions_cpp_5a5093bc___ZN42_INTERNAL_20_common_functions_cpp_5a5093bc5__RRXEj <= USED 0
+__asm___20_common_functions_cpp_5a5093bc___ZN42_INTERNAL_20_common_functions_cpp_5a5093bc7__REV16Ej <= USED 0
+__asm___20_common_functions_cpp_5a5093bc___ZN42_INTERNAL_20_common_functions_cpp_5a5093bc7__REVSHEi <= USED 0
 ;FILE main.o
-__asm___8_main_cpp_main___Z5__RRXj <= USED 0
-__asm___8_main_cpp_main___Z7__REV16j <= USED 0
-__asm___8_main_cpp_main___Z7__REVSHi <= USED 0
+__asm___8_main_cpp_main___ZN25_INTERNAL_8_main_cpp_main5__RRXEj <= USED 0
+__asm___8_main_cpp_main___ZN25_INTERNAL_8_main_cpp_main7__REV16Ej <= USED 0
+__asm___8_main_cpp_main___ZN25_INTERNAL_8_main_cpp_main7__REVSHEi <= USED 0
 ;FILE repeater.o
-__asm___12_repeater_cpp___Z5__RRXj <= USED 0
-__asm___12_repeater_cpp___Z7__REV16j <= USED 0
-__asm___12_repeater_cpp___Z7__REVSHi <= USED 0
+_ZN8repeater8Repeater18getNextDataAdapterEv <= USED 0
+_ZN8repeater8Repeater21getNextPackageAdapterEv <= USED 0
+__asm___12_repeater_cpp_f7402d06___ZN34_INTERNAL_12_repeater_cpp_f7402d065__RRXEj <= USED 0
+__asm___12_repeater_cpp_f7402d06___ZN34_INTERNAL_12_repeater_cpp_f7402d067__REV16Ej <= USED 0
+__asm___12_repeater_cpp_f7402d06___ZN34_INTERNAL_12_repeater_cpp_f7402d067__REVSHEi <= USED 0
 ;FILE retarget.o
-__asm___12_retarget_cpp_3094dbb5___Z5__RRXj <= USED 0
-__asm___12_retarget_cpp_3094dbb5___Z7__REV16j <= USED 0
-__asm___12_retarget_cpp_3094dbb5___Z7__REVSHi <= USED 0
+__asm___12_retarget_cpp_3094dbb5___ZN34_INTERNAL_12_retarget_cpp_3094dbb55__RRXEj <= USED 0
+__asm___12_retarget_cpp_3094dbb5___ZN34_INTERNAL_12_retarget_cpp_3094dbb57__REV16Ej <= USED 0
+__asm___12_retarget_cpp_3094dbb5___ZN34_INTERNAL_12_retarget_cpp_3094dbb57__REVSHEi <= USED 0
 _sys_command_string <= USED 0
 _ttywrch <= USED 0
 ferror <= USED 0
@@ -45,9 +47,9 @@ GPIO_ResetBits <= USED 0
 GPIO_SetBits <= USED 0
 GPIO_Write <= USED 0
 GPIO_WriteBit <= USED 0
-__asm___16_stm32f10x_gpio_c_f8e8e39a____REV16 <= USED 0
-__asm___16_stm32f10x_gpio_c_f8e8e39a____REVSH <= USED 0
-__asm___16_stm32f10x_gpio_c_f8e8e39a____RRX <= USED 0
+__asm___16_stm32f10x_gpio_c_f8e8e39a___ZN38_INTERNAL_16_stm32f10x_gpio_c_f8e8e39a5__RRXEj <= USED 0
+__asm___16_stm32f10x_gpio_c_f8e8e39a___ZN38_INTERNAL_16_stm32f10x_gpio_c_f8e8e39a7__REV16Ej <= USED 0
+__asm___16_stm32f10x_gpio_c_f8e8e39a___ZN38_INTERNAL_16_stm32f10x_gpio_c_f8e8e39a7__REVSHEi <= USED 0
 ;FILE stm32f10x_rcc.o
 RCC_ADCCLKConfig <= USED 0
 RCC_AHBPeriphClockCmd <= USED 0
@@ -79,9 +81,9 @@ RCC_RTCCLKConfig <= USED 0
 RCC_SYSCLKConfig <= USED 0
 RCC_USBCLKConfig <= USED 0
 RCC_WaitForHSEStartUp <= USED 0
-__asm___15_stm32f10x_rcc_c_49e27980____REV16 <= USED 0
-__asm___15_stm32f10x_rcc_c_49e27980____REVSH <= USED 0
-__asm___15_stm32f10x_rcc_c_49e27980____RRX <= USED 0
+__asm___15_stm32f10x_rcc_c_49e27980___ZN37_INTERNAL_15_stm32f10x_rcc_c_49e279805__RRXEj <= USED 0
+__asm___15_stm32f10x_rcc_c_49e27980___ZN37_INTERNAL_15_stm32f10x_rcc_c_49e279807__REV16Ej <= USED 0
+__asm___15_stm32f10x_rcc_c_49e27980___ZN37_INTERNAL_15_stm32f10x_rcc_c_49e279807__REVSHEi <= USED 0
 ;FILE stm32f10x_usart.o
 USART_ClearFlag <= USED 0
 USART_ClockInit <= USED 0
@@ -106,35 +108,42 @@ USART_SmartCardCmd <= USED 0
 USART_SmartCardNACKCmd <= USED 0
 USART_StructInit <= USED 0
 USART_WakeUpConfig <= USED 0
-__asm___17_stm32f10x_usart_c_9565154b____REV16 <= USED 0
-__asm___17_stm32f10x_usart_c_9565154b____REVSH <= USED 0
-__asm___17_stm32f10x_usart_c_9565154b____RRX <= USED 0
+__asm___17_stm32f10x_usart_c_9565154b___ZN39_INTERNAL_17_stm32f10x_usart_c_9565154b5__RRXEj <= USED 0
+__asm___17_stm32f10x_usart_c_9565154b___ZN39_INTERNAL_17_stm32f10x_usart_c_9565154b7__REV16Ej <= USED 0
+__asm___17_stm32f10x_usart_c_9565154b___ZN39_INTERNAL_17_stm32f10x_usart_c_9565154b7__REVSHEi <= USED 0
 ;FILE swd_handle.o
 _ZN3swd7ISwdBusD0Ev <= USED 0
 _ZN3swd7ISwdBusD2Ev <= USED 0
 _ZN3swd9SwdHandleC1ENS_14SwdDevSettingsE <= USED 0
 _ZN3swd9SwdHandleD0Ev <= USED 0
-_ZN3swd9SwdHandleD1Ev <= USED 0
-__asm___14_swd_handle_cpp_66acc63d___Z5__RRXj <= USED 0
-__asm___14_swd_handle_cpp_66acc63d___Z7__REV16j <= USED 0
-__asm___14_swd_handle_cpp_66acc63d___Z7__REVSHi <= USED 0
+__asm___14_swd_handle_cpp_66acc63d___ZN36_INTERNAL_14_swd_handle_cpp_66acc63d5__RRXEj <= USED 0
+__asm___14_swd_handle_cpp_66acc63d___ZN36_INTERNAL_14_swd_handle_cpp_66acc63d7__REV16Ej <= USED 0
+__asm___14_swd_handle_cpp_66acc63d___ZN36_INTERNAL_14_swd_handle_cpp_66acc63d7__REVSHEi <= USED 0
 ;FILE system_stm32f10x.o
 SystemCoreClockUpdate <= USED 0
-__asm___18_system_stm32f10x_c_5d646a67____REV16 <= USED 0
-__asm___18_system_stm32f10x_c_5d646a67____REVSH <= USED 0
-__asm___18_system_stm32f10x_c_5d646a67____RRX <= USED 0
+__asm___18_system_stm32f10x_c_5d646a67___ZN40_INTERNAL_18_system_stm32f10x_c_5d646a675__RRXEj <= USED 0
+__asm___18_system_stm32f10x_c_5d646a67___ZN40_INTERNAL_18_system_stm32f10x_c_5d646a677__REV16Ej <= USED 0
+__asm___18_system_stm32f10x_c_5d646a67___ZN40_INTERNAL_18_system_stm32f10x_c_5d646a677__REVSHEi <= USED 0
 ;FILE uart_handle.o
 _ZN11ISerialPort8sendByteEh <= USED 0
 _ZN11ISerialPort9sendInt32Ej <= USED 0
 _ZN11ISerialPortD0Ev <= USED 0
 _ZN11ISerialPortD2Ev <= USED 0
 _ZN4uart6HandleD0Ev <= USED 0
-__asm___15_uart_handle_cpp_b86612a4___Z5__RRXj <= USED 0
-__asm___15_uart_handle_cpp_b86612a4___Z7__REV16j <= USED 0
-__asm___15_uart_handle_cpp_b86612a4___Z7__REVSHi <= USED 0
+__asm___15_uart_handle_cpp_b86612a4___ZN37_INTERNAL_15_uart_handle_cpp_b86612a45__RRXEj <= USED 0
+__asm___15_uart_handle_cpp_b86612a4___ZN37_INTERNAL_15_uart_handle_cpp_b86612a47__REV16Ej <= USED 0
+__asm___15_uart_handle_cpp_b86612a4___ZN37_INTERNAL_15_uart_handle_cpp_b86612a47__REVSHEi <= USED 0
 ;FILE uart_swd_adapter.o
-_ZN7adapter14UartSwdAdapter11readPackageEPN3swd10SwdPackageE <= USED 0
+_ZN7adapter14UartSwdAdapter10getPackageEPN3swd10SwdPackageE <= USED 0
 _ZN7adapter14UartSwdAdapterC1Ev <= USED 0
-__asm___20_uart_swd_adapter_cpp_93a9f827___Z5__RRXj <= USED 0
-__asm___20_uart_swd_adapter_cpp_93a9f827___Z7__REV16j <= USED 0
-__asm___20_uart_swd_adapter_cpp_93a9f827___Z7__REVSHi <= USED 0
+__asm___20_uart_swd_adapter_cpp_93a9f827___ZN42_INTERNAL_20_uart_swd_adapter_cpp_93a9f8275__RRXEj <= USED 0
+__asm___20_uart_swd_adapter_cpp_93a9f827___ZN42_INTERNAL_20_uart_swd_adapter_cpp_93a9f8277__REV16Ej <= USED 0
+__asm___20_uart_swd_adapter_cpp_93a9f827___ZN42_INTERNAL_20_uart_swd_adapter_cpp_93a9f8277__REVSHEi <= USED 0
+;FILE umba_crc.o
+umba_crc16 <= USED 0
+umba_crc32 <= USED 0
+umba_crc8 <= USED 0
+;FILE umba_crc_table.o
+umba_crc16_table <= USED 0
+umba_crc32_table <= USED 0
+umba_crc8_table <= USED 0

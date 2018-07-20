@@ -333,10 +333,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--feedback=unused</MiscControls>
+              <MiscControls>--feedback=unused --cpp11</MiscControls>
               <Define>STM32F103xB, USE_FULL_ASSERT, STM32F10X_MD, USE_STDPERIPH_DRIVER, HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\uart;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver\inc;.\src\common_functions;.\src\circular_buffer</IncludePath>
+              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\uart;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver;.\src\spl\Libraries\STM32F10x_StdPeriph_Driver\inc;.\src\common_functions;.\src\circular_buffer;.\src\crc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -474,6 +474,21 @@
               <FileName>stm32f10x_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\spl\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>crc</GroupName>
+          <Files>
+            <File>
+              <FileName>umba_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\crc\umba_crc.c</FilePath>
+            </File>
+            <File>
+              <FileName>umba_crc_table.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\crc\umba_crc_table.c</FilePath>
             </File>
           </Files>
         </Group>
