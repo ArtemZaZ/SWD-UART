@@ -1,7 +1,7 @@
-;#<FEEDBACK># ARM Linker, 5060528: Last Updated: Fri Jul 20 12:28:58 2018
+;#<FEEDBACK># ARM Linker, 5060528: Last Updated: Sun Jul 22 22:36:51 2018
 ;VERSION 0.2
 ;FILE base_swd_adapter.o
-_ZN7adapter14BaseSwdAdapterC1Ev <= USED 0
+_ZN7adapter14BaseSwdAdapterC2Ev <= USED 0
 __asm___20_base_swd_adapter_cpp_0fd57b6d___ZN42_INTERNAL_20_base_swd_adapter_cpp_0fd57b6d5__RRXEj <= USED 0
 __asm___20_base_swd_adapter_cpp_0fd57b6d___ZN42_INTERNAL_20_base_swd_adapter_cpp_0fd57b6d7__REV16Ej <= USED 0
 __asm___20_base_swd_adapter_cpp_0fd57b6d___ZN42_INTERNAL_20_base_swd_adapter_cpp_0fd57b6d7__REVSHEi <= USED 0
@@ -16,8 +16,6 @@ __asm___8_main_cpp_main___ZN25_INTERNAL_8_main_cpp_main5__RRXEj <= USED 0
 __asm___8_main_cpp_main___ZN25_INTERNAL_8_main_cpp_main7__REV16Ej <= USED 0
 __asm___8_main_cpp_main___ZN25_INTERNAL_8_main_cpp_main7__REVSHEi <= USED 0
 ;FILE repeater.o
-_ZN8repeater8Repeater18getNextDataAdapterEv <= USED 0
-_ZN8repeater8Repeater21getNextPackageAdapterEv <= USED 0
 __asm___12_repeater_cpp_f7402d06___ZN34_INTERNAL_12_repeater_cpp_f7402d065__RRXEj <= USED 0
 __asm___12_repeater_cpp_f7402d06___ZN34_INTERNAL_12_repeater_cpp_f7402d067__REV16Ej <= USED 0
 __asm___12_repeater_cpp_f7402d06___ZN34_INTERNAL_12_repeater_cpp_f7402d067__REVSHEi <= USED 0
@@ -26,7 +24,6 @@ __asm___12_retarget_cpp_3094dbb5___ZN34_INTERNAL_12_retarget_cpp_3094dbb55__RRXE
 __asm___12_retarget_cpp_3094dbb5___ZN34_INTERNAL_12_retarget_cpp_3094dbb57__REV16Ej <= USED 0
 __asm___12_retarget_cpp_3094dbb5___ZN34_INTERNAL_12_retarget_cpp_3094dbb57__REVSHEi <= USED 0
 _sys_command_string <= USED 0
-_ttywrch <= USED 0
 ferror <= USED 0
 fgetc <= USED 0
 fputc <= USED 0
@@ -134,7 +131,7 @@ __asm___15_uart_handle_cpp_b86612a4___ZN37_INTERNAL_15_uart_handle_cpp_b86612a45
 __asm___15_uart_handle_cpp_b86612a4___ZN37_INTERNAL_15_uart_handle_cpp_b86612a47__REV16Ej <= USED 0
 __asm___15_uart_handle_cpp_b86612a4___ZN37_INTERNAL_15_uart_handle_cpp_b86612a47__REVSHEi <= USED 0
 ;FILE uart_swd_adapter.o
-_ZN7adapter14UartSwdAdapter10getPackageEPN3swd10SwdPackageE <= USED 0
+_ZN7adapter14UartSwdAdapter8readUartEv <= USED 0
 _ZN7adapter14UartSwdAdapterC1Ev <= USED 0
 __asm___20_uart_swd_adapter_cpp_93a9f827___ZN42_INTERNAL_20_uart_swd_adapter_cpp_93a9f8275__RRXEj <= USED 0
 __asm___20_uart_swd_adapter_cpp_93a9f827___ZN42_INTERNAL_20_uart_swd_adapter_cpp_93a9f8277__REV16Ej <= USED 0

@@ -18,26 +18,17 @@ namespace repeater
     adapter::BaseSwdAdapter* m_adapters[10] = {0,};
     // количество прицепленных адаптеров
     uint8_t m_adapterNum = 0;    
-    // ф-ия, которая возвращает следующий указатль на адаптер, из которого цепляется пакет
-    adapter::BaseSwdAdapter* getNextPackageAdapter(void);
-    // ф-ия, которая возвращает следующий указатль на адаптер, из которого цепляются данные
-    adapter::BaseSwdAdapter* getNextDataAdapter(void);
+    /* TODO: надо как-то названия переделать */
+    // ф-ия, которая возвращает следующий указатль на адаптер, с которого цепляются пакеты для отправки по swd
+    adapter::BaseSwdAdapter* getNextPackageToSwdAdapter(void);
+    // ф-ия, которая возвращает следующий указатль на адаптер, с которого цепляются данные c физ интерфейса
+    adapter::BaseSwdAdapter* getNextDataFromPhysicAdapter(void);
+    // ф-ия, которая возвращает следующий указатль на адаптер, с которого отправляются пакеты по физ интерфейсу 
+    adapter::BaseSwdAdapter* getNextPackageToPhysicalPhysicAdapter(void);
   
   private:
-    uint8_t m_packageAdapterCounter = 0;    // индекс текущего адаптера, с которого цепляются пакеты
-    uint8_t m_dataAdapterCounter = 0;   // индекс текущего адаптера, с которого цепляются данные
-    // состояния конечного автомата
-    enum  /* TODO: переделать под строгий enum */
-    {
-      // Читаем пакет из буффера пакетов текущего адаптера из кольца адаптеров,
-      // ставим каретку кольца на слудующий адаптер 
-      READ_PACKAGE,   
-      WAIT,   // просто проведенное с пользой время
-      // Читаем данные с физического интерфеса текущего адаптера из другого кольца адаптеров,
-      // ставим каретку на следующий адаптер, запихиваем прочитанные данные в пакет
-      READ_DATA,      
-      SEND_TO_SWD   // отправляем пакет по SWD
-    } m_state = READ_PACKAGE;
-    
+    uint8_t m_packageToSwdAdapterCounter = 0;     // индекс текущего адаптера, с которого цепляются пакеты для отправки по swd
+    uint8_t m_dataFromPhysicAdapterCounter = 0;   // индекс текущего адаптера, с которого цепляются данные c физ интерфейса
+    uint8_t m_packageToPhisicAdapterCounter = 0;  // индекс текущего адаптера, с которого отправляются пакеты по физ интерфейсу    
   };
 };

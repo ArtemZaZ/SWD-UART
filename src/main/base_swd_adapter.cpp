@@ -9,7 +9,17 @@ namespace adapter
   
   BaseSwdAdapter::BaseSwdAdapter(swd::ISwdBus * swdBus) : m_swdBus(swdBus)
   {
-    
+
+  }
+  
+  bool BaseSwdAdapter::isSwdPackagesToSwdEmpty()
+  {
+    return m_swdPackagesToSwd.isEmpty();
+  }
+  
+  bool BaseSwdAdapter::isSwdPackagesToPhysicEmpty()
+  {
+    return m_swdPackagesToPhysic.isEmpty();
   }
   
 };

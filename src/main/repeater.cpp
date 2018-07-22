@@ -13,45 +13,76 @@ namespace repeater
     m_adapterNum++;
   }
   
-  adapter::BaseSwdAdapter* Repeater::getNextPackageAdapter(void)
+  adapter::BaseSwdAdapter * Repeater::getNextPackageToSwdAdapter(void)
   {
-    if(m_packageAdapterCounter > m_adapterNum)  m_packageAdapterCounter = 0;
-    return m_adapters[m_packageAdapterCounter++];
+    if(m_packageToSwdAdapterCounter >= m_adapterNum)  m_packageToSwdAdapterCounter = 0;
+    return m_adapters[m_packageToSwdAdapterCounter++];
   }
   
-  adapter::BaseSwdAdapter* Repeater::getNextDataAdapter(void)
+  adapter::BaseSwdAdapter * Repeater::getNextDataFromPhysicAdapter(void)
   {
-    if(m_dataAdapterCounter > m_adapterNum)  m_dataAdapterCounter = 0;
-    return m_adapters[m_dataAdapterCounter++];
+    if(m_dataFromPhysicAdapterCounter >= m_adapterNum)  m_dataFromPhysicAdapterCounter = 0;
+    return m_adapters[m_dataFromPhysicAdapterCounter++];
+  }
+  
+  adapter::BaseSwdAdapter * Repeater::getNextPackageToPhysicalPhysicAdapter(void)
+  {
+    if(m_packageToPhisicAdapterCounter >= m_adapterNum)  m_packageToPhisicAdapterCounter = 0;
+    return m_adapters[m_packageToPhisicAdapterCounter++];
   }
   
   void Repeater::fsm(void)
   {
-    switch(m_state)
+    // состояния конечного автомата
+    static enum  /* TODO: переделать под строгий enum */
+    {
+      // Читаем пакет из буффера пакетов текущего адаптера из кольца адаптеров,
+      // ставим каретку кольца на слудующий адаптер 
+      READ_PACKAGE,   
+      // Читаем данные с физического интерфеса текущего адаптера из другого кольца адаптеров,
+      // ставим каретку на следующий адаптер, запихиваем прочитанные данные в пакет
+      READ_DATA,      
+      SEND_TO_SWD,   // отправляем пакет по SWD
+      SEND_TO_PHYSIC  // отправка пакета по физ интерфейсу
+    } state = READ_PACKAGE;
+    
+    static adapter::BaseSwdAdapter * packageToSwdAdapterPointer = nullptr;    // указатель на адаптер...
+    static adapter::BaseSwdAdapter * dataFromPhysicAdapterPointer = nullptr;  // указатель на адаптер...
+    static adapter::BaseSwdAdapter * packageToPhisicAdapterPointer = nullptr; // указатель на адаптер...
+    
+    switch(state)
     {
       case READ_PACKAGE:
-        if(0)   // если буффер адаптера пуст
+        packageToSwdAdapterPointer = getNextPackageToSwdAdapter();
+        if(packageToSwdAdapterPointer->isSwdPackagesToSwdEmpty())   // если буффер адаптера пуст
         {
-          m_state = WAIT;          
-        }
-        // делаем все что нужно
-        m_state = SEND_TO_SWD;
+          state = READ_DATA;          
+        }        
+        state = SEND_TO_SWD;
         break;
       
       case READ_DATA:
-        // тут читаем сообщение с физ интерфейса
-        m_state = READ_PACKAGE;
-        break;
-      
-      case WAIT:
-        m_state = READ_DATA;
+        dataFromPhysicAdapterPointer = getNextDataFromPhysicAdapter();
+        dataFromPhysicAdapterPointer->readFromPhysic();
+        state = SEND_TO_PHYSIC;
         break;
       
       case SEND_TO_SWD:
         // тут отправляем пакет по SWD
-      
-        m_state = READ_PACKAGE;
+        packageToSwdAdapterPointer->sendPackageToSwd();
+        state = SEND_TO_PHYSIC;
         break;
+      
+      case SEND_TO_PHYSIC:
+        // тут отправляем пакет по физ интерфейсу
+        packageToPhisicAdapterPointer = getNextPackageToPhysicalPhysicAdapter();
+        // пропускаем все пустые адаптеры, пока не найдем 1 пакет или адаптеры закончатся
+        while(packageToPhisicAdapterPointer->isSwdPackagesToPhysicEmpty() && (m_packageToPhisicAdapterCounter < m_adapterNum))
+        {
+          packageToPhisicAdapterPointer = getNextPackageToPhysicalPhysicAdapter();
+        }
+        packageToPhisicAdapterPointer->sendPackageToPhysic();
+        state = READ_PACKAGE;
     }
   }
 };
