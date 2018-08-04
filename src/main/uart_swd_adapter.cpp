@@ -12,14 +12,18 @@ namespace adapter
     m_uart = uart;
   }
   
-  /*uint8_t UartSwdAdapter::getPackageFromUart(swd::SwdPackage * package)
+  swd::SwdPackage UartSwdAdapter::parseSwdMessage(uint8_t * message)
   {
-    
+    static swd::SwdPackage package;
+    uint8_t request = message[3];
+    uint32_t data = ((*(uint32_t*)(message + 4)) << 3) | (message[5] >> 5);
+    package.pack(request, data);
+    return package;    
   }
-  */
   
   void UartSwdAdapter::readUart(void)
   {
+    static swd::SwdPackage package;
     uint8_t tempByte = 0; // байт для чтения из буффера
     
     // если пришел новый байт и нет флага вхождения в сообщение
@@ -53,6 +57,8 @@ namespace adapter
         {
           /* TODO: сделать ошибку */
         }
+        package = parseSwdMessage(m_messageBuffer);
+        m_swdPackagesToSwd.writeHead(package);
         m_messageBufferCounter = 0;
         return;        
       }
@@ -69,19 +75,25 @@ namespace adapter
     }        
   }
   
-  void UartSwdAdapter::sendPackageToSwd()
+  void UartSwdAdapter::transferPackageToSwd()
   {
-    
+    static swd::SwdPackage package;
+    package = m_swdPackagesToSwd.readTail();  // берем сообщение, которое хотим отправить по Swd
+    m_swdBus->transferPackage(&package);    // отправляем пакет, в него будут записаны данные, если был запрос на чтение
+    /* TODO: на время разработки будем ретранслировать обратно все пакеты */
+    m_swdPackagesToPhysic.writeHead(package);        
   }
   
   void UartSwdAdapter::sendPackageToPhysic()
   {
+    static swd::SwdPackage package;
+    package = m_swdPackagesToPhysic.readTail();   // получаем пакет из очереди на отправку по физ. интерфейсу
     
   }
   
   void UartSwdAdapter::readFromPhysic()
-  {
-    
+  {    
+    readUart();
   }
   
 };

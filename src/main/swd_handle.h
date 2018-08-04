@@ -13,8 +13,8 @@ namespace swd
                             GPIO_TypeDef * swclkPort, uint8_t swclkPinNumber,    // SWCLK
                             GPIO_TypeDef * nResetPort, uint8_t nResetPinNumber);  // nRESET
       
-      virtual SwdPackage pack(uint8_t APnDP, uint8_t RnW,
-                              uint8_t A, uint32_t data=0);  // упаковщик, про параметры подробнее в i_swd_bus.h и reference manual->SW debug port(стр. 1089)
+      //virtual SwdPackage pack(uint8_t APnDP, uint8_t RnW,
+      //                        uint8_t A, uint32_t data=0);  
       
       virtual void transferPackage(SwdPackage * package);       
     

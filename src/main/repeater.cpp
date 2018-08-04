@@ -56,33 +56,40 @@ namespace repeater
         packageToSwdAdapterPointer = getNextPackageToSwdAdapter();
         if(packageToSwdAdapterPointer->isSwdPackagesToSwdEmpty())   // если буффер адаптера пуст
         {
-          state = READ_DATA;          
+          state = READ_DATA;
+          return;
         }        
         state = SEND_TO_SWD;
-        break;
+        return;
       
       case READ_DATA:
         dataFromPhysicAdapterPointer = getNextDataFromPhysicAdapter();
         dataFromPhysicAdapterPointer->readFromPhysic();
         state = SEND_TO_PHYSIC;
-        break;
+        return;
       
       case SEND_TO_SWD:
         // тут отправляем пакет по SWD
-        packageToSwdAdapterPointer->sendPackageToSwd();
+        packageToSwdAdapterPointer->transferPackageToSwd();
         state = SEND_TO_PHYSIC;
-        break;
+        return;
       
       case SEND_TO_PHYSIC:
         // тут отправляем пакет по физ интерфейсу
         packageToPhisicAdapterPointer = getNextPackageToPhysicalPhysicAdapter();
         // пропускаем все пустые адаптеры, пока не найдем 1 пакет или адаптеры закончатся
-        while(packageToPhisicAdapterPointer->isSwdPackagesToPhysicEmpty() && (m_packageToPhisicAdapterCounter < m_adapterNum))
+        while(packageToPhisicAdapterPointer->isSwdPackagesToPhysicEmpty())
         {
-          packageToPhisicAdapterPointer = getNextPackageToPhysicalPhysicAdapter();
+          if(m_packageToPhisicAdapterCounter <= m_adapterNum)  // закнчились адаптеры
+          {
+            state = READ_PACKAGE;
+            return;
+          }
+          packageToPhisicAdapterPointer = getNextPackageToPhysicalPhysicAdapter();          
         }
         packageToPhisicAdapterPointer->sendPackageToPhysic();
         state = READ_PACKAGE;
+        return;
     }
   }
 };

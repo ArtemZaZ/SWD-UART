@@ -13,7 +13,7 @@ namespace adapter
     BaseSwdAdapter(swd::ISwdBus * swdBus);
     virtual bool isSwdPackagesToSwdEmpty();   // проверка пуст ли буффер пакетов, прилетающих с уарта 
     virtual bool isSwdPackagesToPhysicEmpty();  // проверка пуст ли буффер пакетов, прилетающих с SWD
-    virtual void sendPackageToSwd() = 0;      // отправка пакета(ов) по SWD, обязателен к определению
+    virtual void transferPackageToSwd() = 0;      // отправка пакета(ов) по SWD, обязателен к определению
     virtual void sendPackageToPhysic() = 0;   // отправка пакета(ов) по физ интерфейсу, обязателен к определению
     virtual void readFromPhysic() = 0;        // чтение данных с физ интерфейса
   

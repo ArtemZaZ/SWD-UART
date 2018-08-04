@@ -1,5 +1,4 @@
 #include "swd_handle.h"
-#include "common_functions.h"
 #include "stm32f10x_gpio.h"
 
 namespace swd
@@ -60,10 +59,11 @@ namespace swd
     /* nReset пока не трогаю */
   }
   
+  /*
   SwdPackage SwdHandle::pack(uint8_t APnDP, uint8_t RnW,
                   uint8_t A, uint32_t data)
   {
-    SwdPackage package;
+    static SwdPackage package;
     package.Start = 1;
     package.APnDP = APnDP & 1;
     package.RnW = RnW & 1;
@@ -76,6 +76,7 @@ namespace swd
     package.dataParity = common_functions::countSetBits(data);
     return package;
   }
+  */
   
   inline void SwdHandle::writeBit(uint8_t bit)
   {
